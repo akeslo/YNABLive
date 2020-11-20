@@ -12,8 +12,12 @@ class amexTransaction
     {
       //Set Amount
       $amountPattern = "/-{0,1}\\\$\d{1,3}\.\d{2}/";
-      if (preg_match($amountPattern, $message, $matches)) {
-         $this->amount = str_replace("$","",$matches[0]);
+      if (preg_match_all($amountPattern, $message, $matches)) {
+        if (str_replace("$","",$matches[0][1])) {
+          $this->amount = str_replace("$","",$matches[0][1]);
+        } else {
+          $this->amount = str_replace("$","",$matches[0][0]);
+        }
       }
 
       //Set Merchant
