@@ -11,12 +11,12 @@ class amexTransaction
     public function __construct(string $message)
     {
       //Set Amount
-      $amountPattern = "/-{0,1}\\\$\d{1,3}\.\d{2}/";
+      $amountPattern = "/-{0,1}\\\$\d{1,6},{0,1}\d{1,3}\.\d{2}/";
       if (preg_match_all($amountPattern, $message, $matches)) {
         if (str_replace("$","",$matches[0][1])) {
-          $this->amount = str_replace("$","",$matches[0][1]);
+          $this->amount = str_replace(",","",str_replace("$","",$matches[0][1]));
         } else {
-          $this->amount = str_replace("$","",$matches[0][0]);
+          $this->amount = str_replace(",","",str_replace("$","",$matches[0][0]));
         }
       }
 
